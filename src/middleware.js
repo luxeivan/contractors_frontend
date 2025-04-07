@@ -19,5 +19,5 @@ export default async function middleware(req) {
     }
 
     export const config = {
-        matcher: '/dashboard',
+        matcher: '/dashboard/:path*',
     }
