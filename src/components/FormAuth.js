@@ -1,7 +1,8 @@
 'use client'
 import React, { useState } from 'react'
 import { Form, Input, Checkbox, Button, Alert } from 'antd'
-import { login } from '@/lib/lib';
+import { login } from '@/lib/auth';
+import { redirect, usePathname } from 'next/navigation'
 export default function FormAuth() {
     const [errorAuth, setErrorAuth] = useState(false)
     const [auth, setAuth] = useState(false)
@@ -15,6 +16,7 @@ export default function FormAuth() {
         if (res) {
             setAuth(true)
             setErrorAuth(false)
+            redirect('/dashboard')
         } else {
             setErrorAuth(true)
         }
