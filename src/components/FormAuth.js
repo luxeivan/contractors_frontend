@@ -2,7 +2,7 @@
 import React, { useState } from 'react'
 import { Form, Input, Checkbox, Button, Alert } from 'antd'
 import { login } from '@/lib/auth';
-import { redirect, usePathname } from 'next/navigation'
+import { redirect } from 'next/navigation'
 export default function FormAuth() {
     const [errorAuth, setErrorAuth] = useState(false)
     const [auth, setAuth] = useState(false)
