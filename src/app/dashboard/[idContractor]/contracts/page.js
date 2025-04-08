@@ -1,29 +1,18 @@
-import Container from '@/components/Container';
+// import Container from '@/components/Container';
 import Title from 'antd/es/typography/Title';
-import Text from 'antd/es/typography/Text'
-import axios from 'axios';
-import { cookies } from 'next/headers'
+// import Text from 'antd/es/typography/Text'
+// import axios from 'axios';
+// import { cookies } from 'next/headers'
 import React from 'react'
 import { Button, Card, Flex, Image } from 'antd';
 import Link from 'next/link';
-const server = process.env.SERVER_API
+import { getContractorItem } from '@/lib/getData';
+// const server = process.env.SERVER_API
 export default async function Contracts({ params }) {
-  const jwt = (await cookies()).get('jwt')?.value || null
+  // const jwt = (await cookies()).get('jwt')?.value || null
   const { idContractor } = await params
-  let contractor = null
-  try {
-    const res = await axios.get(server + `/api/contractors/${idContractor}?populate=contracts`, {
-      headers: {
-        Authorization: `Bearer ${jwt}`
-      }
-    })
-    if (res.data) {
-      contractor = res.data
-    }
-    // console.log("contractor:", contractor);
-  } catch (error) {
-    console.log("error:", error);
-  }
+  const contractor = await getContractorItem(idContractor)
+ 
   return (
     <>
       {contractor &&
