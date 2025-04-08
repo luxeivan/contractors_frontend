@@ -5,7 +5,7 @@ import Title from 'antd/es/typography/Title'
 import React from 'react'
 import { getContractItem } from '@/lib/getData'
 import ButtonAddStep from '@/components/ButtonAddStep'
-const server = process.env.SERVER_API
+const server = process.env.NEXT_PUBLIC_SERVER_API
 export default async function Contract({ params }) {
     // const jwt = (await cookies()).get('jwt')?.value || null
     const { idContractor, idContract } = await params
@@ -20,7 +20,7 @@ export default async function Contract({ params }) {
             children: <Flex vertical gap={20}>
                 <p>{item.description}</p>
                 <Flex gap={20}>
-                    {item.photos.map(item => <Image src={`${server}${item.url}`} width={200}/>)}
+                    {item.photos.map(item => <Image key={item.id} src={`${server}${item.url}`} width={200}/>)}
                 </Flex>
             </Flex>,
         }
