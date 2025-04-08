@@ -12,14 +12,15 @@ function getCookie(name) {
 }
 
 export default function ButtonAddStep({ idContract, countSteps }) {
+    const [form] = Form.useForm();
     const router = useRouter()
     const jwt = getCookie('jwt')
     // console.log(countSteps);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [fileList, setFileList] = useState([]);
     const [uploading, setUploading] = useState(false);
-    const handleUpload = async (values) => {
-        console.log("values", values)
+    async function handleUpload (values)  {
+        // console.log("values", values)
         const formData = new FormData();
         fileList.forEach(file => {
             formData.append('files', file);
@@ -53,9 +54,10 @@ export default function ButtonAddStep({ idContract, countSteps }) {
 
                     })
                 if (newStep) {
-                    console.log("newStep", newStep);
+                    // console.log("newStep", newStep);
                     setFileList([]);
                     setIsModalOpen(false);
+                    form.resetFields()
                     router.refresh()
                 } else {
                     throw new Error('Ошибка добавления этапа')
@@ -102,6 +104,7 @@ export default function ButtonAddStep({ idContract, countSteps }) {
             <Button type='primary' onClick={showModal}>Добавить выполненный этап</Button>
             <Modal title="Добавить выполненный этап" open={isModalOpen} onOk={handleOk} onCancel={handleCancel} footer={false}>
                 <Form
+                    form={form}
                     onFinish={handleUpload}
                     labelCol={{ span: 8 }}
                     wrapperCol={{ span: 16 }}
