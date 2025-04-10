@@ -12,11 +12,14 @@ export async function login(email, password) {
                 identifier: email,
                 password: password,
             })
-
-        // console.log('Well done!');
         // console.log('User profile', response.data.user);
-        // console.log('User token', response.data.jwt);
-        await cookies().set('jwt', response.data.jwt, { expires })
+        if (response.data.jwt) {
+            const cookieStore = await cookies()
+            // console.log("cookieStore ",cookieStore );            
+            cookieStore.set('jwt', response.data.jwt, { expires })
+        } else {
+            return false
+        }
         // cookies().set('user', JSON.stringify(response.data.user), { expires })
         return true
     } catch (error) {
@@ -40,7 +43,7 @@ export async function getUser() {
         if (res.data) {
             // (await cookies()).set('user', JSON.stringify(res.data), { expires })
             return res.data
-        }        
+        }
     } catch (error) {
         console.log("error:", error);
     }

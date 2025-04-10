@@ -6,7 +6,7 @@ import { redirect } from 'next/navigation'
 const server = process.env.SERVER_API
 async function getJwt() {
     const jwt = (await cookies()).get('jwt')?.value || null
-    console.log(jwt)
+    // console.log(jwt)
     if (!jwt) redirect('/login')
     return jwt
 }
