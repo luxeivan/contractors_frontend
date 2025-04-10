@@ -5,6 +5,7 @@ import React, { useEffect, useState } from 'react'
 import ViewSteps from './ViewSteps'
 import Link from 'next/link'
 import Title from 'antd/es/typography/Title'
+import Text from 'antd/es/typography/Text'
 const server = process.env.NEXT_PUBLIC_SERVER_API
 export default function ModalViewContract({ isOpenModal, closeModal, docIdForModal }) {
     const [contract, setContracts] = useState(null)
@@ -54,7 +55,7 @@ export default function ModalViewContract({ isOpenModal, closeModal, docIdForMod
             {
                 key: '4',
                 label: 'Файл договора',
-                children: <Link href={`${server}${contract.document.url}`} target='_blank'>{contract.document.name}</Link>,
+                children: contract.document?<Link href={`${server}${contract.document.url}`} target='_blank'>{contract.document.name}</Link>:<Text style={{color:"#f00"}}>файл отсутствует</Text>,
             },
         ]
     }
