@@ -6,7 +6,7 @@ import { redirect } from 'next/navigation'
 
 export default function ButtonLogout() {
     const handlerClick = () => {
-        console.log(123);
+        // console.log(123);
         logout()
         redirect('/')
     }

@@ -4,6 +4,12 @@ import { cookies } from "next/headers";
 import { redirect } from 'next/navigation'
 const server = process.env.SERVER_API
 const expires = new Date(Date.now() + 3600 * 1000)
+async function getJwt() {
+    const jwt = (await cookies()).get('jwt')?.value || null
+    // console.log(jwt)
+    if (!jwt) redirect('/login')
+    return jwt
+}
 export async function login(email, password) {
     // console.log(email, password)
     try {
@@ -16,7 +22,7 @@ export async function login(email, password) {
         if (response.data.jwt) {
             const cookieStore = await cookies()
             // console.log("cookieStore ",cookieStore );            
-            cookieStore.set('jwt', response.data.jwt, { expires })
+            await cookieStore.set('jwt', response.data.jwt, { expires })
         } else {
             return false
         }
@@ -27,13 +33,13 @@ export async function login(email, password) {
         return false
     }
 }
-export async function getJwt() {
-    const jwt = (await cookies()).get('jwt')?.value
-    if (!jwt) return null
-    return jwt
-}
+// export async function getJwt() {
+//     const jwt = getJwt()
+//     if (!jwt) return null
+//     return jwt
+// }
 export async function getUser() {
-    const jwt = (await cookies()).get('jwt')?.value || null
+    const jwt = await getJwt() || null
     try {
         const res = await axios.get(server + `/api/users/me?populate[0]=role`, {
             headers: {
