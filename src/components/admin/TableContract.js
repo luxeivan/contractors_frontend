@@ -3,6 +3,7 @@ import { getAllContracts } from '@/lib/getData';
 import { Table, Space, Pagination, Flex, Switch, Button, Modal } from 'antd';
 import React, { useEffect, useState } from 'react'
 import ModalViewContract from './ModalViewContract';
+import ModalAddContract from './ModalAddContract';
 const defaultPageSize = 10
 const defaultPage = 1
 
@@ -98,6 +99,9 @@ export default function TableContract() {
     setDocIdForModal(null)
     setIsOpenModal(false)
   }
+  const closeModalAddContract = async () => {
+    setIsOpenModalAddContract(false)
+  }
 
   return (
     <div>
@@ -127,7 +131,8 @@ export default function TableContract() {
         onChange={handlerChange}
         loading={loading}
       />
-      <ModalViewContract isOpenModal={isOpenModal} closeModal={closeModal} docIdForModal={docIdForModal}/>
+      <ModalViewContract isOpenModal={isOpenModal} closeModal={closeModal} docIdForModal={docIdForModal} />
+      <ModalAddContract isOpenModalAddContract={isOpenModalAddContract} closeModalAddContract={closeModalAddContract} />
 
       {/* <Pagination
         total={allContracts.meta.pagination.total}
