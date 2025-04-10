@@ -10,6 +10,7 @@ export default function TableContract() {
   const [allContracts, setAllContracts] = useState()
   const [loading, setLoading] = useState(true)
   const [isOpenModal, setIsOpenModal] = useState(false)
+  const [isOpenModalAddContract, setIsOpenModalAddContract] = useState(false)
   const [docIdForModal, setDocIdForModal] = useState(null)
 
   const fetching = async (defaultPageSize, defaultPage) => {
@@ -81,13 +82,13 @@ export default function TableContract() {
   }))
 
   const handlerChange = async (pagination) => {
-    console.log("pagination", pagination);
+    // console.log("pagination", pagination);
 
     fetching(pagination.pageSize, pagination.current)
   }
   const handlerAddNewContract = async () => {
     console.log('Добавить новый объект');
-
+    setIsOpenModalAddContract(true)
   }
   const openModal = async (documentId) => {
     setDocIdForModal(documentId)

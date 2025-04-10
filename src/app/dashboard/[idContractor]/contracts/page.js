@@ -18,7 +18,7 @@ export default async function Contracts({ params }) {
       {contractor &&
         <>
           <Title level={2}>{contractor.name}</Title>
-          <Flex gap={20} style={{ padding: 20 }}>
+          <Flex gap={20} style={{ padding: 20 }} wrap="wrap">
             {contractor.contracts.map(item =>
               <Link key={item.id} href={`/dashboard/${idContractor}/contracts/${item.documentId}`}>
                 <Card hoverable title={'Договор №' + item.number} >

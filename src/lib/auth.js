@@ -1,6 +1,7 @@
 'use server'
 import axios from "axios";
 import { cookies } from "next/headers";
+import { redirect } from 'next/navigation'
 const server = process.env.SERVER_API
 const expires = new Date(Date.now() + 3600 * 1000)
 export async function login(email, password) {
@@ -15,7 +16,7 @@ export async function login(email, password) {
         // console.log('Well done!');
         // console.log('User profile', response.data.user);
         // console.log('User token', response.data.jwt);
-        cookies().set('jwt', response.data.jwt, { expires })
+        await cookies().set('jwt', response.data.jwt, { expires })
         // cookies().set('user', JSON.stringify(response.data.user), { expires })
         return true
     } catch (error) {
@@ -46,4 +47,5 @@ export async function getUser() {
 }
 export async function logout() {
     (await cookies()).set('jwt', '', { expires: new Date(0) })
+    redirect('/')
 }

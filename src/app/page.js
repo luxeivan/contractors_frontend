@@ -10,9 +10,9 @@ export default function Home() {
 
   return (
     <Flex vertical justify="center" align="center" style={{ height: "100vh" }} gap={20}>
-      <Title>Приложение</Title>
-      <Link href='/dashboard'><Button type="primary">Админ панель</Button></Link>
-      <Link href='/login'><Button type="primary">Авторизация</Button></Link>
+      <Title style={{margin:0}}>Мособлэнерго</Title>
+      <Title level={2} style={{margin:0,color:"gray"}}>Приложение для подрядных организаций</Title>
+      <Link href='/dashboard'><Button type="primary">Перейти в панель управления</Button></Link>
     </Flex>
   );
 }
