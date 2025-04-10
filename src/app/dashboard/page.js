@@ -4,12 +4,12 @@ import Title from 'antd/es/typography/Title'
 // import axios from 'axios'
 import { Card, Flex, Image } from 'antd'
 import Link from 'next/link'
-import { getContractor } from '@/lib/getData'
+import { getMyContractors } from '@/lib/getData'
 // const server = process.env.SERVER_API
 export default async function Admin() {
 
     // const jwt = (await cookies()).get('jwt')?.value || null
-    const contractor = await getContractor()
+    const contractor = await getMyContractors()
     console.log("contractor", contractor);
 
 

@@ -41,7 +41,7 @@ export async function getContractorItem(idContractor) {
         console.log("error:", error);
     }
 }
-export async function getContractor() {
+export async function getMyContractors() {
     try {
         const res = await axios.get(server + '/api/mycontractors?populate=contracts', {
             headers: {
@@ -71,6 +71,38 @@ export async function getAllContracts(pageSize = 5, page = 1) {
             return res.data
         }
         // console.log("contractors:", contractors);
+    } catch (error) {
+        console.log("error:", error);
+    }
+}
+export async function getAllContractors(pageSize = 5, page = 1) {
+    
+    try {
+        const res = await axios.get(server + `/api/contractors?pagination[pageSize]=${pageSize}&pagination[page]=${page}`, {
+            headers: {
+
+                Authorization: `Bearer ${await getJwt()}`
+            }
+        })
+        if (res.data) {
+            return res.data
+        }
+        // console.log("contractors:", contractors);
+    } catch (error) {
+        console.log("error:", error);
+    }
+}
+export async function getContractorItemForAdmin(idContractor) {
+    
+    try {
+        const res = await axios.get(server + `/api/contractors/${idContractor}?populate[0]=contracts&populate[1]=user`, {
+            headers: {
+                Authorization: `Bearer ${await getJwt()}`
+            }
+        })
+        if (res.data) {
+            return res.data.data
+        }
     } catch (error) {
         console.log("error:", error);
     }

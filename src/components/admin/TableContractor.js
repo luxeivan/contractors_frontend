@@ -1,16 +1,16 @@
 'use client'
-import { getAllContracts } from '@/lib/getData';
+import { getAllContractors } from '@/lib/getData';
 import { Table, Space, Pagination, Flex, Switch, Button, Modal } from 'antd';
 import React, { useEffect, useState } from 'react'
-import ModalViewContract from './ModalViewContract';
-import ModalAddContract from './ModalAddContract';
 import { ReloadOutlined } from '@ant-design/icons';
+import ModalViewContractor from './ModalViewContractor';
+import ModalAddContractor from './ModalAddContractor';
 const defaultPageSize = 10
 const defaultPage = 1
 
-export default function TableContract() {
+export default function TableContractor() {
   const [pagination, setPagination] = useState()
-  const [allContracts, setAllContracts] = useState()
+  const [allContractors, setAllContractors] = useState()
   const [loading, setLoading] = useState(true)
   const [isOpenModal, setIsOpenModal] = useState(false)
   const [isOpenModalAddContract, setIsOpenModalAddContract] = useState(false)
@@ -19,9 +19,9 @@ export default function TableContract() {
   const fetching = async (defaultPageSize, defaultPage) => {
     try {
       setLoading(true)
-      const temp = await getAllContracts(defaultPageSize, defaultPage)
+      const temp = await getAllContractors(defaultPageSize, defaultPage)
       console.log("temp", temp)
-      setAllContracts(temp)
+      setAllContractors (temp)
       setLoading(false)
     } catch (error) {
       console.log(error);
@@ -33,37 +33,37 @@ export default function TableContract() {
     fetching(defaultPageSize, defaultPage)
   }, [])
 
-  console.log("allContracts", allContracts);
+  console.log("allContractors", allContractors);
   const columns = [
     // {
-      //   title: 'ИНН/КПП',
-      //   dataIndex: 'contractor_inn_kpp',
-      //   key: 'contractor_inn_kpp',
-      //   render: text => <span>{text}</span>,
-      // },
-      {
-        title: 'Номер договора',
-        dataIndex: 'number',
-        key: 'number',
-        render: text => <span>Договор №{text}</span>,
-      },
-      {
-        title: 'Описание',
-        dataIndex: 'description',
-        key: 'description',
-      },
-      {
-        title: 'Социальный объект',
-        dataIndex: 'social',
-        key: 'social',
-        render: bool => <Switch disabled defaultValue={bool} />,
-      },
-      {
-        title: 'Подрядчик',
-        dataIndex: 'contractor',
-        key: 'contractor',
-        render: text => <span>{text}</span>,
-      },
+    //   title: 'Подрядчик',
+    //   dataIndex: 'contractor',
+    //   key: 'contractor',
+    //   render: text => <span>{text}</span>,
+    // },
+    {
+      title: 'Наименование',
+      dataIndex: 'name',
+      key: 'name',
+      render: text => <span>{text}</span>,
+    },
+    {
+      title: 'ИНН/КПП',
+      dataIndex: 'contractor_inn_kpp',
+      key: 'contractor_inn_kpp',
+      render: text => <span>{text}</span>,
+    },
+    // {
+    //   title: 'Социальный объект',
+    //   dataIndex: 'social',
+    //   key: 'social',
+    //   render: bool => <Switch disabled defaultValue={bool} />,
+    // },
+    // {
+    //   title: 'Описание',
+    //   dataIndex: 'description',
+    //   key: 'description',
+    // },
     {
       title: 'Действия',
       key: 'action',
@@ -74,14 +74,14 @@ export default function TableContract() {
       ),
     },
   ];
-  const data = allContracts?.data?.map(item => ({
+  const data = allContractors?.data?.map(item => ({
     key: item.id,
     documentId: item.documentId,
-    number: item.number,
+    name: item.name,
     description: item.description,
-    contractor: item.contractor.name,
-    social: item.social,
-    contractor_inn_kpp: `${item.contractor.inn}/${item.contractor.kpp}`
+    // contractor: item.contractor.name,
+    // social: item.social,
+    contractor_inn_kpp: `${item.inn}/${item.kpp}`
   }))
 
   const handlerReload = async () => {
@@ -97,7 +97,7 @@ export default function TableContract() {
     fetching(pagination.pageSize, pagination.current)
   }
   const handlerAddNewContract = async () => {
-    console.log('Добавить новый объект');
+    // console.log('Добавить новый договор');
     setIsOpenModalAddContract(true)
   }
   const openModal = async (documentId) => {
@@ -116,7 +116,7 @@ export default function TableContract() {
     <div>
       <Flex justify='space-between' align='center' style={{ marginBottom: 20 }}>
         <a onClick={handlerReload}><ReloadOutlined /></a>
-        <Button onClick={handlerAddNewContract} type='primary'>Добавить новый договор</Button>
+        <Button onClick={handlerAddNewContract} type='primary'>Добавить нового подрядчика</Button>
       </Flex>
       <Table
         columns={columns}
@@ -134,26 +134,16 @@ export default function TableContract() {
           defaultPageSize: defaultPageSize,
           defaultCurrent: defaultPage,
           showTotal: (total, range) => `${range[0]}-${range[1]} из ${total} всего`,
-          total: allContracts?.data?.length > 0 ? allContracts.meta.pagination.total : 0,
+          total: allContractors?.data?.length > 0 ? allContractors.meta.pagination.total : 0,
           align: 'center',
 
         }}
         onChange={handlerChange}
         loading={loading}
       />
-      <ModalViewContract isOpenModal={isOpenModal} closeModal={closeModal} docIdForModal={docIdForModal} />
-      <ModalAddContract isOpenModalAddContract={isOpenModalAddContract} closeModalAddContract={closeModalAddContract} />
-
-      {/* <Pagination
-        total={allContracts.meta.pagination.total}
-        showTotal={(total, range) => `${range[0]}-${range[1]} of ${total} items`}
-        defaultPageSize={5}
-        pageSize={5}
-        defaultCurrent={1}
-        showSizeChanger={true}
-        pageSizeOptions={[25,50,100]}
-        /> */}
-
+      <ModalViewContractor isOpenModal={isOpenModal} closeModal={closeModal} docIdForModal={docIdForModal} />
+      <ModalAddContractor isOpenModalAddContract={isOpenModalAddContract} closeModalAddContract={closeModalAddContract} />
+      
     </div>
   )
 }
