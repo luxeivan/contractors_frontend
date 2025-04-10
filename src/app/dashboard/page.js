@@ -4,25 +4,25 @@ import Title from 'antd/es/typography/Title'
 // import axios from 'axios'
 import { Card, Flex, Image } from 'antd'
 import Link from 'next/link'
-import { getContractors } from '@/lib/getData'
+import { getContractor } from '@/lib/getData'
 // const server = process.env.SERVER_API
 export default async function Admin() {
 
     // const jwt = (await cookies()).get('jwt')?.value || null
-    const contractors = await getContractors()
-    // console.log("jwt", jwt);
+    const contractor = await getContractor()
+    console.log("contractor", contractor);
 
 
     return (
         <>
-            {contractors &&
+            {contractor &&
                 <>
-                    <Title level={2}>Мои компании</Title>
+                    <Title level={2}>{contractor.name}</Title>
                     <Flex gap={20} style={{ padding: 20 }}>
-                        {contractors.map(item =>
-                            <Link key={item.id} href={`/dashboard/${item.documentId}/contracts`}>
-                                <Card hoverable title={item.name} >
-                                    <Image src='https://www.seascope.gr/wp-content/uploads/2020/07/home-company-icon.png' preview={false} width={200} />
+                        {contractor.contracts.map(item =>
+                            <Link key={item.id} href={`/dashboard/contracts/${item.documentId}`}>
+                                <Card hoverable title={'Договор №'+item.number} >
+                                    <Image src='https://infostart.ru/upload/iblock/d48/d489a1a6bb10747aa17e33be612ef5ff.png' preview={false} width={200} />
                                 </Card>
                             </Link>
                         )}

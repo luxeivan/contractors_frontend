@@ -7,6 +7,7 @@ import React from 'react'
 import { getContractItem } from '@/lib/getData'
 import ButtonAddStep from '@/components/ButtonAddStep'
 import dayjs from 'dayjs'
+import Link from 'next/link'
 const server = process.env.NEXT_PUBLIC_SERVER_API
 export default async function Contract({ params }) {
     // const jwt = (await cookies()).get('jwt')?.value || null
@@ -18,11 +19,11 @@ export default async function Contract({ params }) {
     const items = contract.steps.map((item, index) => (
         {
             key: index + 1,
-            label: <Flex gap={30}><Text>{item.name}</Text><Text><span style={{color:"gray"}}>Дата создания: {dayjs(item.createdAt).format('DD-MM-YYYY HH:mm')}</span></Text></Flex>,
+            label: <Flex gap={30}><Text>{item.name}</Text><Text><span style={{ color: "gray" }}>Дата создания: {dayjs(item.createdAt).format('DD-MM-YYYY HH:mm')}</span></Text></Flex>,
             children: <Flex vertical gap={20}>
                 <p>{item.description}</p>
-                <Flex gap={20}>                
-                        {item.photos.map(item => <Image key={item.id} src={`${server}${item.url}`} width={200} />)}                             
+                <Flex gap={20}>
+                    {item.photos.map(item => <Image key={item.id} src={`${server}${item.url}`} width={200} />)}
                 </Flex>
             </Flex>,
         }
@@ -34,7 +35,8 @@ export default async function Contract({ params }) {
                 <>
                     <Title>Договор №{contract.number}</Title>
                     <Flex gap={20} vertical>
-                        <Flex justify='end'>
+                        <Flex justify={contract.document?.url?'space-between':'end'} align='center'>
+                            {contract.document?.url && <Link target='_blank' href={`${server}${contract.document.url}`}><span style={{ color: "blue" }}>Посмотреть договор</span></Link>}
                             <ButtonAddStep idContract={idContract} countSteps={countSteps} />
                         </Flex>
                         <Collapse items={items} defaultActiveKey={[items.length]} />

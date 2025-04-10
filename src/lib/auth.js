@@ -2,8 +2,9 @@
 import axios from "axios";
 import { cookies } from "next/headers";
 const server = process.env.SERVER_API
+const expires = new Date(Date.now() + 3600 * 1000)
 export async function login(email, password) {
-    console.log(email, password)
+    // console.log(email, password)
     try {
         const response = await axios
             .post(server + '/api/auth/local', {
@@ -11,12 +12,11 @@ export async function login(email, password) {
                 password: password,
             })
 
-        console.log('Well done!');
+        // console.log('Well done!');
         // console.log('User profile', response.data.user);
         // console.log('User token', response.data.jwt);
-        const expires = new Date(Date.now() + 3600 * 1000)
         cookies().set('jwt', response.data.jwt, { expires })
-        cookies().set('user', JSON.stringify(response.data.user), { expires })
+        // cookies().set('user', JSON.stringify(response.data.user), { expires })
         return true
     } catch (error) {
         console.log('An error occurred:', error);
@@ -24,15 +24,26 @@ export async function login(email, password) {
     }
 }
 export async function getJwt() {
-    const jwt = cookies().get('jwt')?.value
+    const jwt = (await cookies()).get('jwt')?.value
     if (!jwt) return null
     return jwt
 }
 export async function getUser() {
-    const user = cookies().get('jwt')?.value
-    if (!user) return null
-    return user
+    const jwt = (await cookies()).get('jwt')?.value || null
+    try {
+        const res = await axios.get(server + `/api/users/me?populate[0]=role`, {
+            headers: {
+                Authorization: `Bearer ${jwt}`
+            }
+        })
+        if (res.data) {
+            // (await cookies()).set('user', JSON.stringify(res.data), { expires })
+            return res.data
+        }        
+    } catch (error) {
+        console.log("error:", error);
+    }
 }
 export async function logout() {
-    cookies().set('jwt', '', { expires: new Date(0) })
+    (await cookies()).set('jwt', '', { expires: new Date(0) })
 }

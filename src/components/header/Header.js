@@ -5,9 +5,12 @@ import Title from 'antd/es/typography/Title'
 import Text from 'antd/es/typography/Text'
 import { cookies } from 'next/headers'
 import ButtonBack from './ButtonBack'
+import { getUser } from '@/lib/auth'
 
 export default async function Header() {
-  const user = JSON.parse((await cookies()).get('user')?.value || null)
+  const user = await getUser()
+  // console.log(user);
+  
   return (
     <Flex vertical>
       <Flex justify='space-between' align='center'>
@@ -22,7 +25,7 @@ export default async function Header() {
           <ButtonLogout />
         </Flex>
       </Flex>
-      <Flex>
+      <Flex style={{marginBottom:20}}>
         <ButtonBack />
       </Flex>
     </Flex>

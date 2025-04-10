@@ -9,8 +9,8 @@ export default async function middleware(req) {
     // console.log("isProtectedRoute:",isProtectedRoute)
     
     // if (isProtectedRoute) {
-        const cookie = cookies().get('jwt')?.value
-        console.log("cookie:", cookie)
+        const cookie = (await cookies()).get('jwt')?.value
+        // console.log("cookie:", cookie)
         if (!cookie) {
             return NextResponse.redirect(new URL('/login', req.nextUrl))
         }
@@ -19,5 +19,5 @@ export default async function middleware(req) {
     }
 
     export const config = {
-        matcher: '/dashboard/:path*',
+        matcher: ['/dashboard/:path*','/admin/:path*'],
     }

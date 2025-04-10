@@ -1,7 +1,7 @@
 'use client'
 import React, { useState } from 'react'
 import { Form, Input, Checkbox, Button, Alert } from 'antd'
-import { login } from '@/lib/auth';
+import { getUser, login } from '@/lib/auth';
 import { redirect } from 'next/navigation'
 export default function FormAuth() {
     const [errorAuth, setErrorAuth] = useState(false)
@@ -14,9 +14,15 @@ export default function FormAuth() {
         const res = await login(values.username, values.password)
         setLoading(false)
         if (res) {
-            setAuth(true)
+            await setAuth(true)
             setErrorAuth(false)
-            redirect('/dashboard')
+            const user = await getUser()
+            console.log("user", user);
+            if (user.role.type === 'admin' || user.role.type === 'readadmin') {
+                redirect('/admin')
+            } else {
+                redirect('/dashboard')
+            }
         } else {
             setErrorAuth(true)
         }
