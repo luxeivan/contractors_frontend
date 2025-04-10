@@ -4,10 +4,12 @@ import { Table, Space, Pagination, Flex, Switch, Button, Modal } from 'antd';
 import React, { useEffect, useState } from 'react'
 import ModalViewContract from './ModalViewContract';
 import ModalAddContract from './ModalAddContract';
+import { ReloadOutlined } from '@ant-design/icons';
 const defaultPageSize = 10
 const defaultPage = 1
 
 export default function TableContract() {
+  const [pagination, setPagination] = useState()
   const [allContracts, setAllContracts] = useState()
   const [loading, setLoading] = useState(true)
   const [isOpenModal, setIsOpenModal] = useState(false)
@@ -82,9 +84,16 @@ export default function TableContract() {
     contractor_inn_kpp: `${item.contractor.inn}/${item.contractor.kpp}`
   }))
 
+  const handlerReload = async () => {
+    if(pagination){
+      fetching(pagination.pageSize, pagination.current)
+    }else{
+      fetching(defaultPageSize, defaultPage)
+    }
+  }
   const handlerChange = async (pagination) => {
     // console.log("pagination", pagination);
-
+    setPagination(pagination)
     fetching(pagination.pageSize, pagination.current)
   }
   const handlerAddNewContract = async () => {
@@ -105,7 +114,8 @@ export default function TableContract() {
 
   return (
     <div>
-      <Flex justify='end' style={{ marginBottom: 20 }}>
+      <Flex justify='space-between' align='center' style={{ marginBottom: 20 }}>
+        <a onClick={handlerReload}><ReloadOutlined /></a>
         <Button onClick={handlerAddNewContract} type='primary'>Добавить новый договор</Button>
       </Flex>
       <Table

@@ -7,7 +7,7 @@ export default function ButtonBack() {
     const router = useRouter()
     const pathname = usePathname()
     
-    if(pathname === '/dashboard') return false
+    if(pathname === '/dashboard'||pathname === '/admin') return false
     return (
         <Button onClick={() => { router.back() }}>Назад</Button>
     )
