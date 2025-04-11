@@ -21,7 +21,7 @@ export default function FormAuth() {
             if (user.role.type === 'admin' || user.role.type === 'readadmin') {
                 redirect('/admin')
             } else {
-                // redirect('/dashboard')
+                redirect('/dashboard')
             }
         } else {
             setErrorAuth(true)

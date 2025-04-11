@@ -2,6 +2,7 @@
 import axios from "axios";
 import { cookies } from "next/headers";
 import { redirect } from 'next/navigation'
+import { NextResponse } from "next/server";
 const server = process.env.SERVER_API
 const expires = new Date(Date.now() + 3600 * 1000)
 async function getJwt() {
@@ -22,12 +23,19 @@ export async function login(email, password) {
         if (response.data.jwt) {
             const cookieStore = await cookies()
             console.log("cookieStore ",cookieStore );            
-            cookieStore.set('jwt', response.data.jwt, { expires })                      
+            cookieStore.set('jwt', response.data.jwt, { expires })   
+            // const user = await getUser()            
+            // console.log("user", user);
+            // if (user.role.type === 'admin' || user.role.type === 'readadmin') {
+            //     return NextResponse.redirect(new URL('/admin'))
+            // } else {
+            //     return NextResponse.redirect(new URL('/dashboard'))
+            // }                   
+            return true
         } else {
             return false
         }
         // cookies().set('user', JSON.stringify(response.data.user), { expires })
-        return true
     } catch (error) {
         console.log('An error occurred:', error);
         return false

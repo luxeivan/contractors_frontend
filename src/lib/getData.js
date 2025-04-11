@@ -2,7 +2,7 @@
 import axios from 'axios'
 import { cookies } from 'next/headers'
 // import { NextResponse } from 'next/server'
-import { redirect } from 'next/navigation'  
+import { redirect } from 'next/navigation'
 const server = process.env.SERVER_API
 async function getJwt() {
     const jwt = (await cookies()).get('jwt')?.value || null
@@ -10,6 +10,8 @@ async function getJwt() {
     if (!jwt) redirect('/login')
     return jwt
 }
+
+// Запрос одного договора для пользователя--------------------------------------------------------------------------
 export async function getContractItem(idContract) {
     try {
         const res = await axios.get(server + `/api/contracts/${idContract}?populate[0]=contractor&populate[1]=document&populate[2]=steps.photos`, {
@@ -23,11 +25,13 @@ export async function getContractItem(idContract) {
         }
 
     } catch (error) {
-        console.log("error:", error);
+        console.log("error getContractItem:", error);
     }
 }
+
+// Запрос одного подрядчика для пользователя--------------------------------------------------------------------------
 export async function getContractorItem(idContractor) {
-    
+
     try {
         const res = await axios.get(server + `/api/contractors/${idContractor}?populate=contracts`, {
             headers: {
@@ -38,9 +42,11 @@ export async function getContractorItem(idContractor) {
             return res.data
         }
     } catch (error) {
-        console.log("error:", error);
+        console.log("error getContractorItem:", error);
     }
 }
+
+// Запрос только своего подрядчика для пользователя--------------------------------------------------------------------------
 export async function getMyContractor() {
     try {
         const res = await axios.get(server + '/api/mycontractors?populate=contracts', {
@@ -54,12 +60,14 @@ export async function getMyContractor() {
         }
         // console.log("contractors:", contractors);
     } catch (error) {
-        console.log("error:", error);
+        console.log("error getMyContractor:", error);
 
     }
 }
+
+// Запрос всех договоров для админской учетки--------------------------------------------------------------------------
 export async function getAllContracts(pageSize = 5, page = 1) {
-    
+
     try {
         const res = await axios.get(server + `/api/contracts?pagination[pageSize]=${pageSize}&pagination[page]=${page}&populate[0]=contractor&populate[1]=steps`, {
             headers: {
@@ -72,11 +80,13 @@ export async function getAllContracts(pageSize = 5, page = 1) {
         }
         // console.log("contractors:", contractors);
     } catch (error) {
-        console.log("error:", error);
+        console.log("error getAllContracts:", error);
     }
 }
+
+// Запрос всех подрядчиков для админской учетки--------------------------------------------------------------------------
 export async function getAllContractors(pageSize = 5, page = 1) {
-    
+
     try {
         const res = await axios.get(server + `/api/contractors?pagination[pageSize]=${pageSize}&pagination[page]=${page}`, {
             headers: {
@@ -89,11 +99,13 @@ export async function getAllContractors(pageSize = 5, page = 1) {
         }
         // console.log("contractors:", contractors);
     } catch (error) {
-        console.log("error:", error);
+        console.log("error getAllContractors:", error);
     }
 }
+
+// Запрос одного подрядчика для админской учетки--------------------------------------------------------------------------
 export async function getContractorItemForAdmin(idContractor) {
-    
+
     try {
         const res = await axios.get(server + `/api/contractors/${idContractor}?populate[0]=contracts&populate[1]=user`, {
             headers: {
@@ -104,6 +116,85 @@ export async function getContractorItemForAdmin(idContractor) {
             return res.data.data
         }
     } catch (error) {
-        console.log("error:", error);
+        console.log("error getContractorItemForAdmin:", error);
+    }
+}
+
+
+// Добавление нового подрядчика--------------------------------------------------------------------------
+export async function addNewContractor(data) {
+    try {
+        // ---------------------------------------------------
+        const resUser = await axios.post(server + `/api/users`, {
+            
+                username: `${data.inn}_${data.kpp}`,
+                email: `${data.inn}@${data.kpp}.ru`,
+                password: data.password,
+                role: 3,
+            
+        }, {
+            headers: {
+                Authorization: `Bearer ${await getJwt()}`
+            }
+        })        
+        // -------------------------------------------------------
+        if (resUser.data) {
+            const resContractor = await axios.post(server + `/api/contractors`, {
+                data: {
+                    name: data.name,
+                    inn: data.inn,
+                    kpp: data.kpp,
+                    user: resUser.data.id,
+                }
+            }, {
+                headers: {
+                    Authorization: `Bearer ${await getJwt()}`
+                }
+            })
+            // ---------------------------------------------------------
+            if (resContractor.data) {
+                return resContractor.data.data
+            }
+        }
+    } catch (error) {
+        console.log("error addNewContractor :", error);
+    }
+}
+// Добавление нового договора--------------------------------------------------------------------------
+export async function addNewContract(formData, data) {
+    try {       
+        const file = await axios.post(server + '/api/upload',
+            formData,
+            {
+                headers: {
+                    Authorization: `Bearer ${await getJwt()}`
+                }
+            })
+        
+        // -------------------------------------------------------
+
+        if (file) {
+            console.log(file);
+            
+            const resContract = await axios.post(server + `/api/contracts`, {
+                data: {
+                    number: data.number,
+                    description: data.description,
+                    social: data.social,
+                    document: file.data[0].id,
+                    contractor:data.contractor
+                }
+            }, {
+                headers: {
+                    Authorization: `Bearer ${await getJwt()}`
+                }
+            })
+            // ---------------------------------------------------------
+            if (resContract.data) {
+                return resContract.data.data
+            }
+        }
+    } catch (error) {
+        console.log("error addNewContract :", error);
     }
 }
