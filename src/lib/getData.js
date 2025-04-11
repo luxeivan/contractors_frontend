@@ -128,7 +128,7 @@ export async function addNewContractor(data) {
         // ---------------------------------------------------
         const resUser = await axios.post(server + `/api/users`, {
 
-            username: `${data.inn}_${data.kpp}`,
+            username: `${data.inn}-${data.kpp}`,
             email: `${data.inn}@${data.kpp}.ru`,
             password: data.password,
             role: 3,

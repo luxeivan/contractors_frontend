@@ -41,15 +41,15 @@ export default function ModalViewContractor({ isOpenModal, closeModal, docIdForM
             },
             {
                 key: '2',
-                label: 'ИНН',
-                children: contractor.inn,
+                label: 'ИНН-КПП',
+                children: `${contractor.inn}-${contractor.kpp}`,
             },
            
-            {
-                key: '3',
-                label: 'КПП',
-                children: <span>{contractor.kpp}</span>,
-            },            
+            // {
+            //     key: '3',
+            //     label: 'КПП',
+            //     children: <span>{contractor.kpp}</span>,
+            // },            
         ]
     }
     return (

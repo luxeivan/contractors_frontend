@@ -55,8 +55,8 @@ export default function ModalViewContract({ isOpenModal, closeModal, docIdForMod
             },
             {
                 key: '3',
-                label: 'ИНН/КПП',
-                children: <span>{contract.contractor.inn}/{contract.contractor.kpp}</span>,
+                label: 'ИНН-КПП',
+                children: <span>{contract.contractor.inn}-{contract.contractor.kpp}</span>,
             },
             {
                 key: '5',
