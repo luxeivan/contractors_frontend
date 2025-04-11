@@ -45,7 +45,13 @@ export default function TableContract() {
       title: 'Номер договора',
       dataIndex: 'number',
       key: 'number',
-      render: text => <span>Договор №{text}</span>,
+      render: text => <span>{text}</span>,
+    },
+    {
+      title: 'Дата договора',
+      dataIndex: 'dateContract',
+      key: 'dateContract',
+      render: text => <span>{text}</span>,
     },
     {
       title: 'Описание',
@@ -84,6 +90,7 @@ export default function TableContract() {
     key: item.id,
     documentId: item.documentId,
     number: item.number,
+    dateContract:item.dateContract,
     description: item.description,
     contractor: item.contractor.name,
     social: item.social,

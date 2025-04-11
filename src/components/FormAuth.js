@@ -28,6 +28,7 @@ export default function FormAuth() {
             }
         } else {
             setErrorAuth(true)
+            setAuth(false)
         }
         // Mutate data
     }
@@ -67,10 +68,6 @@ export default function FormAuth() {
                     rules={[{ required: true, message: 'Пожалуйста введите пароль' }]}
                 >
                     <Input.Password />
-                </Form.Item>
-
-                <Form.Item name="remember" valuePropName="checked" label={null}>
-                    <Checkbox>Запомнить меня</Checkbox>
                 </Form.Item>
 
                 <Form.Item label={null}>

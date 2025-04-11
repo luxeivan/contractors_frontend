@@ -123,15 +123,23 @@ export async function getContractorItemForAdmin(idContractor) {
 
 
 // Добавление нового подрядчика--------------------------------------------------------------------------
-export async function addNewContractor(data) {
+export async function addNewContractor(data) {     
     try {
+        // ---------------------------------------------------
+        const roleList = await axios.get(server + `/api/users-permissions/roles`, {
+            headers: {
+                Authorization: `Bearer ${await getJwt()}`
+            }
+        })
+        console.log(roleList);
+        
         // ---------------------------------------------------
         const resUser = await axios.post(server + `/api/users`, {
 
             username: `${data.inn}-${data.kpp}`,
             email: `${data.inn}@${data.kpp}.ru`,
             password: data.password,
-            role: 3,
+            role: roleList.data.roles.find(item=>item.type === 'user').id,
 
         }, {
             headers: {
