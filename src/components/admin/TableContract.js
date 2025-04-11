@@ -104,7 +104,7 @@ export default function TableContract() {
     fetching(pagination.pageSize, pagination.current)
   }
   const handlerAddNewContract = async () => {
-    console.log('Добавить новый объект');
+    // console.log('Добавить новый объект');
     setIsOpenModalAddContract(true)
   }
   const openModal = async (documentId) => {
@@ -149,7 +149,14 @@ export default function TableContract() {
         loading={loading}
       />
       <ModalViewContract isOpenModal={isOpenModal} closeModal={closeModal} docIdForModal={docIdForModal} />
-      <ModalAddContract isOpenModalAddContract={isOpenModalAddContract} closeModalAddContract={closeModalAddContract} />
+      <Modal
+        title="Добавление нового договора"
+        open={isOpenModalAddContract}
+        onCancel={closeModalAddContract}
+        footer={false}
+      >
+        <ModalAddContract isOpenModalAddContract={isOpenModalAddContract} closeModalAddContract={closeModalAddContract} />
+      </Modal>
 
       {/* <Pagination
         total={allContracts.meta.pagination.total}

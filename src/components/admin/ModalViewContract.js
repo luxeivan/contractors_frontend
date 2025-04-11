@@ -39,6 +39,11 @@ export default function ModalViewContract({ isOpenModal, closeModal, docIdForMod
             //     children: contract.number,
             // },
             {
+                key: '4',
+                label: 'Дата договора',
+                children: <span>{dayjs(contract.dateContract).format('DD.MM.YYYY HH:mm')}</span>,
+            },
+            {
                 key: '1',
                 label: 'Описание',
                 children: contract.description,
@@ -52,11 +57,6 @@ export default function ModalViewContract({ isOpenModal, closeModal, docIdForMod
                 key: '3',
                 label: 'ИНН/КПП',
                 children: <span>{contract.contractor.inn}/{contract.contractor.kpp}</span>,
-            },
-            {
-                key: '4',
-                label: 'Добавлен',
-                children: <span>{dayjs(contract.createdAt).format('DD.MM.YYYY HH:mm')}</span>,
             },
             {
                 key: '5',

@@ -1,5 +1,6 @@
 'use server'
 import axios from 'axios'
+import dayjs from 'dayjs'
 import { cookies } from 'next/headers'
 // import { NextResponse } from 'next/server'
 import { redirect } from 'next/navigation'
@@ -126,17 +127,17 @@ export async function addNewContractor(data) {
     try {
         // ---------------------------------------------------
         const resUser = await axios.post(server + `/api/users`, {
-            
-                username: `${data.inn}_${data.kpp}`,
-                email: `${data.inn}@${data.kpp}.ru`,
-                password: data.password,
-                role: 3,
-            
+
+            username: `${data.inn}_${data.kpp}`,
+            email: `${data.inn}@${data.kpp}.ru`,
+            password: data.password,
+            role: 3,
+
         }, {
             headers: {
                 Authorization: `Bearer ${await getJwt()}`
             }
-        })        
+        })
         // -------------------------------------------------------
         if (resUser.data) {
             const resContractor = await axios.post(server + `/api/contractors`, {
@@ -162,7 +163,7 @@ export async function addNewContractor(data) {
 }
 // Добавление нового договора--------------------------------------------------------------------------
 export async function addNewContract(formData, data) {
-    try {       
+    try {
         const file = await axios.post(server + '/api/upload',
             formData,
             {
@@ -170,19 +171,20 @@ export async function addNewContract(formData, data) {
                     Authorization: `Bearer ${await getJwt()}`
                 }
             })
-        
+
         // -------------------------------------------------------
 
         if (file) {
             console.log(file);
-            
+
             const resContract = await axios.post(server + `/api/contracts`, {
                 data: {
                     number: data.number,
+                    dateContract: dayjs(data.dateContract).add(1,'day'),
                     description: data.description,
                     social: data.social,
                     document: file.data[0].id,
-                    contractor:data.contractor
+                    contractor: data.contractor
                 }
             }, {
                 headers: {

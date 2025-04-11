@@ -19,13 +19,7 @@ export default function ModalAddContractor({ isOpenModalAddContract, closeModalA
     router.refresh()
   };
   return (
-    <Modal
-      title="Добавление нового подрядчика"
-      open={isOpenModalAddContract}
-      onCancel={closeModalAddContract}
-      footer={false}
-    >
-      {/* <Title level={5} style={{ color: "gray", margin: "50px 0" }}>В стадии разработки...</Title> */}
+   
       <Form
         name="formAddContractor"
         labelCol={{ span: 8 }}
@@ -110,6 +104,5 @@ export default function ModalAddContractor({ isOpenModalAddContract, closeModalA
           </Button>
         </Form.Item>
       </Form>
-    </Modal>
   )
 }

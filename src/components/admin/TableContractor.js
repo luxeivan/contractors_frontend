@@ -21,7 +21,7 @@ export default function TableContractor() {
       setLoading(true)
       const temp = await getAllContractors(defaultPageSize, defaultPage)
       // console.log("temp", temp)
-      setAllContractors (temp)
+      setAllContractors(temp)
       setLoading(false)
     } catch (error) {
       console.log(error);
@@ -85,9 +85,9 @@ export default function TableContractor() {
   }))
 
   const handlerReload = async () => {
-    if(pagination){
+    if (pagination) {
       fetching(pagination.pageSize, pagination.current)
-    }else{
+    } else {
       fetching(defaultPageSize, defaultPage)
     }
   }
@@ -142,8 +142,17 @@ export default function TableContractor() {
         loading={loading}
       />
       <ModalViewContractor isOpenModal={isOpenModal} closeModal={closeModal} docIdForModal={docIdForModal} />
-      <ModalAddContractor isOpenModalAddContract={isOpenModalAddContract} closeModalAddContract={closeModalAddContract} />
-      
+      <Modal
+        title="Добавление нового подрядчика"
+        open={isOpenModalAddContract}
+        onCancel={closeModalAddContract}
+        footer={false}
+      >
+          <ModalAddContractor isOpenModalAddContract={isOpenModalAddContract} closeModalAddContract={closeModalAddContract} />
+        
+
+      </Modal>
+
     </div>
   )
 }

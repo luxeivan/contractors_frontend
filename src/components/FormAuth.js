@@ -11,11 +11,14 @@ export default function FormAuth() {
 
     async function onFinish(values) {
         setLoading(true)
+        console.log("начало login");
         const res = await login(values.username, values.password)
+        setAuth(true)
+        console.log("res",res);
+        
         setLoading(false)
         if (res) {
             const user = await getUser()
-            setAuth(true)
             setErrorAuth(false)
             console.log("user", user);
             if (user.role.type === 'admin' || user.role.type === 'readadmin') {
@@ -53,7 +56,7 @@ export default function FormAuth() {
                 <Form.Item
                     label="Пользователь"
                     name="username"
-                    rules={[{ required: true, message: 'Please input your username!' }]}
+                    rules={[{ required: true, message: 'Пожалуйста введите пользователя' }]}
                 >
                     <Input />
                 </Form.Item>
@@ -61,7 +64,7 @@ export default function FormAuth() {
                 <Form.Item
                     label="Пароль"
                     name="password"
-                    rules={[{ required: true, message: 'Please input your password!' }]}
+                    rules={[{ required: true, message: 'Пожалуйста введите пароль' }]}
                 >
                     <Input.Password />
                 </Form.Item>

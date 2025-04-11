@@ -1,7 +1,7 @@
 'use client'
 import { addNewContract, getAllContractors } from '@/lib/getData';
 import { UploadOutlined } from '@ant-design/icons';
-import { Button, Form, Input, Modal, Select, Switch, Upload } from 'antd'
+import { Button, DatePicker, Form, Input, Modal, Select, Switch, Upload } from 'antd'
 import Title from 'antd/es/typography/Title'
 import { useRouter } from 'next/navigation';
 import React, { useEffect, useState } from 'react'
@@ -66,12 +66,7 @@ export default function ModalAddContract({ isOpenModalAddContract, closeModalAdd
     fileList,
   };
   return (
-    <Modal
-      title="Добавление нового договора"
-      open={isOpenModalAddContract}
-      onCancel={closeModalAddContract}
-      footer={false}
-    >
+    
       <Form
         form={form}
         onFinish={handleUpload}
@@ -99,6 +94,13 @@ export default function ModalAddContract({ isOpenModalAddContract, closeModalAdd
           required
         >
           <Input />
+        </Form.Item>
+        <Form.Item
+          name='dateContract'
+          label="Дата договора"
+          required
+        >
+           <DatePicker />
         </Form.Item>
         <Form.Item
           name='description'
@@ -129,7 +131,5 @@ export default function ModalAddContract({ isOpenModalAddContract, closeModalAdd
           {uploading ? 'Добавляется...' : 'Добавить договор'}
         </Button>
       </Form>
-      {/* <Title level={5} style={{color:"gray",margin:"50px 0"}}>В стадии разработки...</Title> */}
-    </Modal>
   )
 }
