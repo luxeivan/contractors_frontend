@@ -1,19 +1,18 @@
-// import { cookies } from 'next/headers'
+
 import { Button, Card, Collapse, Flex, Image } from 'antd'
 import Title from 'antd/es/typography/Title'
 import Text from 'antd/es/typography/Text'
-// import axios from 'axios'
 import React from 'react'
 import { getContractItem } from '@/lib/getData'
 import ButtonAddStep from '@/components/ButtonAddStep'
 import dayjs from 'dayjs'
 import Link from 'next/link'
-const server = process.env.NEXT_PUBLIC_SERVER_API
-export default async function Contract({ params }) {
-    // const jwt = (await cookies()).get('jwt')?.value || null
-    const { idContractor, idContract } = await params
-    let contract = await getContractItem(idContract)
 
+const server = process.env.NEXT_PUBLIC_SERVER_API
+
+export default async function Contract({ params }) {
+    const { idContract } = await params
+    let contract = await getContractItem(idContract)
     console.log("contract:", contract);
     const countSteps = contract.steps.length
     const items = contract.steps.map((item, index) => (

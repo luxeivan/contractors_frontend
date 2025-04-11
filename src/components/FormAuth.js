@@ -14,14 +14,14 @@ export default function FormAuth() {
         const res = await login(values.username, values.password)
         setLoading(false)
         if (res) {
-            await setAuth(true)
-            setErrorAuth(false)
             const user = await getUser()
+            setAuth(true)
+            setErrorAuth(false)
             console.log("user", user);
             if (user.role.type === 'admin' || user.role.type === 'readadmin') {
                 redirect('/admin')
             } else {
-                redirect('/dashboard')
+                // redirect('/dashboard')
             }
         } else {
             setErrorAuth(true)

@@ -1,18 +1,12 @@
-// import { cookies } from 'next/headers'
 import React from 'react'
 import Title from 'antd/es/typography/Title'
-// import axios from 'axios'
 import { Card, Flex, Image } from 'antd'
 import Link from 'next/link'
-import { getMyContractors } from '@/lib/getData'
-// const server = process.env.SERVER_API
+import { getMyContractor } from '@/lib/getData'
 export default async function Admin() {
-
-    // const jwt = (await cookies()).get('jwt')?.value || null
-    const contractor = await getMyContractors()
-    console.log("contractor", contractor);
-
-
+    const contractor = await getMyContractor()
+    // const contractor = {contracts:[]}
+    // console.log("contractor", contractor);
     return (
         <>
             {contractor &&

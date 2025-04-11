@@ -41,7 +41,7 @@ export async function getContractorItem(idContractor) {
         console.log("error:", error);
     }
 }
-export async function getMyContractors() {
+export async function getMyContractor() {
     try {
         const res = await axios.get(server + '/api/mycontractors?populate=contracts', {
             headers: {
@@ -61,7 +61,7 @@ export async function getMyContractors() {
 export async function getAllContracts(pageSize = 5, page = 1) {
     
     try {
-        const res = await axios.get(server + `/api/contracts?pagination[pageSize]=${pageSize}&pagination[page]=${page}&populate=contractor`, {
+        const res = await axios.get(server + `/api/contracts?pagination[pageSize]=${pageSize}&pagination[page]=${page}&populate[0]=contractor&populate[1]=steps`, {
             headers: {
 
                 Authorization: `Bearer ${await getJwt()}`

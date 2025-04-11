@@ -16,7 +16,7 @@ export default function ModalViewContract({ isOpenModal, closeModal, docIdForMod
         try {
             setLoading(true)
             const temp = await getContractItem(idContract)
-            console.log("temp", temp)
+            // console.log("temp", temp)
             setContracts(temp)
             setLoading(false)
         } catch (error) {
@@ -64,6 +64,7 @@ export default function ModalViewContract({ isOpenModal, closeModal, docIdForMod
             open={isOpenModal}
             onCancel={closeModal}
             title={!loading && contract ? `Договор№${contract.number}` : 'Загрузка договора...'}
+            footer={false}
         >
             {loading && <Flex justify='center'><Spin /></Flex>}
             {!loading && contract &&

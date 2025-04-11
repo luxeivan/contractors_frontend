@@ -18,7 +18,7 @@ export default function ModalViewContractor({ isOpenModal, closeModal, docIdForM
         try {
             setLoading(true)
             const temp = await getContractorItemForAdmin(idContract)
-            console.log("temp", temp)
+            // console.log("temp", temp)
             setContractor(temp)
             setLoading(false)
         } catch (error) {
@@ -57,6 +57,7 @@ export default function ModalViewContractor({ isOpenModal, closeModal, docIdForM
             open={isOpenModal}
             onCancel={closeModal}
             title={!loading && contractor ? `Подрядчик ${contractor.name}` : 'Загрузка подрядчика...'}
+            footer={false}
         >
             {loading && <Flex justify='center'><Spin /></Flex>}
             {!loading && contractor &&

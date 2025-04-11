@@ -20,7 +20,7 @@ export default function TableContractor() {
     try {
       setLoading(true)
       const temp = await getAllContractors(defaultPageSize, defaultPage)
-      console.log("temp", temp)
+      // console.log("temp", temp)
       setAllContractors (temp)
       setLoading(false)
     } catch (error) {
@@ -33,7 +33,7 @@ export default function TableContractor() {
     fetching(defaultPageSize, defaultPage)
   }, [])
 
-  console.log("allContractors", allContractors);
+  // console.log("allContractors", allContractors);
   const columns = [
     // {
     //   title: 'Подрядчик',

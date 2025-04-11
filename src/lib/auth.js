@@ -18,11 +18,11 @@ export async function login(email, password) {
                 identifier: email,
                 password: password,
             })
-        // console.log('User profile', response.data.user);
+        console.log('User profile', response.data.user);
         if (response.data.jwt) {
             const cookieStore = await cookies()
-            // console.log("cookieStore ",cookieStore );            
-            await cookieStore.set('jwt', response.data.jwt, { expires })
+            console.log("cookieStore ",cookieStore );            
+            cookieStore.set('jwt', response.data.jwt, { expires })                      
         } else {
             return false
         }

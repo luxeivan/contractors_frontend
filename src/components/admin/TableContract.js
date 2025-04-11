@@ -20,7 +20,7 @@ export default function TableContract() {
     try {
       setLoading(true)
       const temp = await getAllContracts(defaultPageSize, defaultPage)
-      console.log("temp", temp)
+      // console.log("temp", temp)
       setAllContracts(temp)
       setLoading(false)
     } catch (error) {
@@ -33,37 +33,43 @@ export default function TableContract() {
     fetching(defaultPageSize, defaultPage)
   }, [])
 
-  console.log("allContracts", allContracts);
+  // console.log("allContracts", allContracts);
   const columns = [
     // {
-      //   title: 'ИНН/КПП',
-      //   dataIndex: 'contractor_inn_kpp',
-      //   key: 'contractor_inn_kpp',
-      //   render: text => <span>{text}</span>,
-      // },
-      {
-        title: 'Номер договора',
-        dataIndex: 'number',
-        key: 'number',
-        render: text => <span>Договор №{text}</span>,
-      },
-      {
-        title: 'Описание',
-        dataIndex: 'description',
-        key: 'description',
-      },
-      {
-        title: 'Социальный объект',
-        dataIndex: 'social',
-        key: 'social',
-        render: bool => <Switch disabled defaultValue={bool} />,
-      },
-      {
-        title: 'Подрядчик',
-        dataIndex: 'contractor',
-        key: 'contractor',
-        render: text => <span>{text}</span>,
-      },
+    //   title: 'ИНН/КПП',
+    //   dataIndex: 'contractor_inn_kpp',
+    //   key: 'contractor_inn_kpp',
+    //   render: text => <span>{text}</span>,
+    // },
+    {
+      title: 'Номер договора',
+      dataIndex: 'number',
+      key: 'number',
+      render: text => <span>Договор №{text}</span>,
+    },
+    {
+      title: 'Описание',
+      dataIndex: 'description',
+      key: 'description',
+    },
+    {
+      title: 'Социальный объект',
+      dataIndex: 'social',
+      key: 'social',
+      render: bool => <Switch disabled defaultValue={bool} />,
+    },
+    {
+      title: 'Кол-во выполненых этапов',
+      dataIndex: 'stepsComplited',
+      key: 'stepsComplited',
+      render: text => <span>{text}</span>,
+    },
+    {
+      title: 'Подрядчик',
+      dataIndex: 'contractor',
+      key: 'contractor',
+      render: text => <span>{text}</span>,
+    },
     {
       title: 'Действия',
       key: 'action',
@@ -81,13 +87,14 @@ export default function TableContract() {
     description: item.description,
     contractor: item.contractor.name,
     social: item.social,
+    stepsComplited: item.steps?.length,
     contractor_inn_kpp: `${item.contractor.inn}/${item.contractor.kpp}`
   }))
 
   const handlerReload = async () => {
-    if(pagination){
+    if (pagination) {
       fetching(pagination.pageSize, pagination.current)
-    }else{
+    } else {
       fetching(defaultPageSize, defaultPage)
     }
   }
