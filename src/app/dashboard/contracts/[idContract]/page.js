@@ -18,7 +18,7 @@ export default async function Contract({ params }) {
     const items = contract.steps.map((item, index) => (
         {
             key: index + 1,
-            label: <Flex gap={30}><Text>{item.name}</Text><Text><span style={{ color: "gray" }}>Дата создания: {dayjs(item.createdAt).format('DD-MM-YYYY HH:mm')}</span></Text></Flex>,
+            label: <Flex gap={30}><Text>{item.name}</Text><Text><span style={{ color: "gray" }}>Дата создания: {dayjs(item.createdAt).format('DD.MM.YYYY HH:mm')}</span></Text></Flex>,
             children: <Flex vertical gap={20}>
                 <p>{item.description}</p>
                 <Flex gap={20}>

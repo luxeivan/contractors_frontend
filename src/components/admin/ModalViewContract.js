@@ -6,6 +6,7 @@ import ViewSteps from './ViewSteps'
 import Link from 'next/link'
 import Title from 'antd/es/typography/Title'
 import Text from 'antd/es/typography/Text'
+import dayjs from 'dayjs'
 const server = process.env.NEXT_PUBLIC_SERVER_API
 export default function ModalViewContract({ isOpenModal, closeModal, docIdForModal }) {
     const [contract, setContracts] = useState(null)
@@ -38,12 +39,12 @@ export default function ModalViewContract({ isOpenModal, closeModal, docIdForMod
             //     children: contract.number,
             // },
             {
-                key: '2',
+                key: '1',
                 label: 'Описание',
                 children: contract.description,
             },
             {
-                key: '3',
+                key: '2',
                 label: 'Подрядчик',
                 children: contract.contractor.name,
             },
@@ -54,6 +55,11 @@ export default function ModalViewContract({ isOpenModal, closeModal, docIdForMod
             },
             {
                 key: '4',
+                label: 'Добавлен',
+                children: <span>{dayjs(contract.createdAt).format('DD.MM.YYYY HH:mm')}</span>,
+            },
+            {
+                key: '5',
                 label: 'Файл договора',
                 children: contract.document?<Link href={`${server}${contract.document.url}`} target='_blank'>{contract.document.name}</Link>:<Text style={{color:"#f00"}}>файл отсутствует</Text>,
             },
