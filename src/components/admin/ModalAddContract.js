@@ -1,10 +1,11 @@
 'use client'
 import { addNewContract, getAllContractors } from '@/lib/getData';
 import { UploadOutlined } from '@ant-design/icons';
-import { Button, DatePicker, Form, Input, Modal, Select, Switch, Upload } from 'antd'
+import { Button, ConfigProvider, DatePicker, Form, Input, Modal, Select, Switch, Upload } from 'antd'
 import Title from 'antd/es/typography/Title'
 import { useRouter } from 'next/navigation';
 import React, { useEffect, useState } from 'react'
+import locale from "antd/es/locale/ru_RU";
 
 export default function ModalAddContract({ isOpenModalAddContract, closeModalAddContract, }) {
   const router = useRouter()
@@ -13,8 +14,8 @@ export default function ModalAddContract({ isOpenModalAddContract, closeModalAdd
   const [uploading, setUploading] = useState(false);
   const [form] = Form.useForm();
   const fetchContractors = async () => {
-    const allContractors = await getAllContractors(100,1)
-    console.log("allContractors",allContractors)
+    const allContractors = await getAllContractors(100, 1)
+    console.log("allContractors", allContractors)
     setContractors(allContractors.data.map(item => ({
       value: item.id,
       label: item.name,
@@ -66,7 +67,8 @@ export default function ModalAddContract({ isOpenModalAddContract, closeModalAdd
     fileList,
   };
   return (
-    
+    <ConfigProvider locale={locale}>
+
       <Form
         form={form}
         onFinish={handleUpload}
@@ -100,7 +102,7 @@ export default function ModalAddContract({ isOpenModalAddContract, closeModalAdd
           label="Дата договора"
           required
         >
-           <DatePicker />
+          <DatePicker />
         </Form.Item>
         <Form.Item
           name='description'
@@ -131,5 +133,6 @@ export default function ModalAddContract({ isOpenModalAddContract, closeModalAdd
           {uploading ? 'Добавляется...' : 'Добавить договор'}
         </Button>
       </Form>
+    </ConfigProvider>
   )
 }
