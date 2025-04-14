@@ -3,6 +3,7 @@ import { NextResponse } from "next/server";
 
 export async function GET(request) {
     const session = await auth()
+    console.log("request",request);
     const url = new URL('/login', request.url)
     console.log("url",url);
     if(!session){
