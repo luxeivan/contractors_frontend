@@ -9,7 +9,7 @@ import { redirect } from 'next/navigation'
 export default function ButtonLogout() {
     const handlerClick = async () => {
         // console.log(123);
-        await signOut()
+        await signOut({redirect:false})
         redirect('/')
     }
     return (
