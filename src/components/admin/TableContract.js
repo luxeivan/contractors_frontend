@@ -92,10 +92,10 @@ export default function TableContract() {
     number: item.number,
     dateContract:item.dateContract,
     description: item.description,
-    contractor: item.contractor.name,
+    contractor: item.contractor?.name,
     social: item.social,
     stepsComplited: item.steps?.length,
-    contractor_inn_kpp: `${item.contractor.inn}/${item.contractor.kpp}`
+    contractor_inn_kpp: `${item.contractor?.inn}/${item.contractor?.kpp}`
   }))
 
   const handlerReload = async () => {
