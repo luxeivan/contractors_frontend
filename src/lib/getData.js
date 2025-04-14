@@ -1,4 +1,5 @@
 'use server'
+import { auth } from '@/auth'
 import axios from 'axios'
 import dayjs from 'dayjs'
 import { cookies } from 'next/headers'
@@ -6,7 +7,10 @@ import { cookies } from 'next/headers'
 import { redirect } from 'next/navigation'
 const server = process.env.SERVER_API
 async function getJwt() {
-    const jwt = (await cookies()).get('jwt')?.value || null
+    const session = await auth()
+    // console.log("session",session);
+    const jwt = session.user.jwt
+    // const jwt = (await cookies()).get('jwt')?.value || null
     // console.log(jwt)
     if (!jwt) redirect('/login')
     return jwt
@@ -140,6 +144,7 @@ export async function addNewContractor(data) {
             email: `${data.inn}@${data.kpp}.ru`,
             password: data.password,
             role: roleList.data.roles.find(item=>item.type === 'user').id,
+            confirmed:true
 
         }, {
             headers: {

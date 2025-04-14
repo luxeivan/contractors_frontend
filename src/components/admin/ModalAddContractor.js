@@ -82,6 +82,7 @@ export default function ModalAddContractor({ isOpenModalAddContract, closeModalA
           rules={[
             {
               required: true,
+              message: 'Пожалуйста повторите пароль.'
             },
             ({ getFieldValue }) => ({
               validator(_, value) {
@@ -93,7 +94,7 @@ export default function ModalAddContractor({ isOpenModalAddContract, closeModalA
             }),
           ]}
         >
-          <Input />
+          <Input.Password />
         </Form.Item>
 
 

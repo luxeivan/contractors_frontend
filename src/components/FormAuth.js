@@ -1,36 +1,48 @@
 'use client'
 import React, { useState } from 'react'
-import { Form, Input, Checkbox, Button, Alert } from 'antd'
-import { getUser, login } from '@/lib/auth';
-import { redirect } from 'next/navigation'
+import { Form, Input, Button, Alert } from 'antd'
+// import { getUser } from '@/lib/auth';
+// import { redirect } from 'next/navigation'
+import { useSearchParams } from "next/navigation";
+import { signIn } from 'next-auth/react';
 export default function FormAuth() {
+    console.log(useSearchParams())
     const [errorAuth, setErrorAuth] = useState(false)
     const [auth, setAuth] = useState(false)
     const [loading, setLoading] = useState(false)
 
 
     async function onFinish(values) {
-        setLoading(true)
-        console.log("начало login");
-        const res = await login(values.username, values.password)
-        setAuth(true)
-        console.log("res",res);
-        
-        setLoading(false)
-        if (res) {
-            const user = await getUser()
-            setErrorAuth(false)
-            console.log("user", user);
-            if (user.role.type === 'admin' || user.role.type === 'readadmin') {
-                redirect('/admin')
-            } else {
-                redirect('/dashboard')
-            }
-        } else {
-            setErrorAuth(true)
-            setAuth(false)
+        try {
+
+            setLoading(true)
+            const formData = new FormData()
+            formData.append('username', values.username)
+            formData.append('password', values.password)
+            const res = await signIn("credentials", { username: values.username, password: values.password, redirect: "true", redirectTo: "/checkauth" })
+            // console.log("конец login");
+            // setAuth(true)
+            // console.log("res", res);
+
+            setLoading(false)
+            // if (res) {
+            //     const user = await getUser()
+            //     setErrorAuth(false)
+            //     console.log("user", user);
+            //     if (user.role.type === 'admin' || user.role.type === 'readadmin') {
+            //         redirect('/admin')
+            //     } else {
+            //         redirect('/dashboard')
+            //     }
+            // } else {
+            //     setErrorAuth(true)
+            //     setAuth(false)
+            // }
+            // Mutate data
+        } catch (error) {
+            console.log("error", error);
+            setLoading(false)
         }
-        // Mutate data
     }
 
     const onFinishFailed = errorInfo => {

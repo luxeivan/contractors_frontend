@@ -42,7 +42,7 @@ export default function ButtonAddStep({ idContract, countSteps }) {
                         data: {
                             name: values.name,
                             contract: idContract,
-                            number: values.number,
+                            // number: values.number,
                             description: values.description,
                             photos: files.data?.map(item => item.id)
                         }
@@ -109,14 +109,14 @@ export default function ButtonAddStep({ idContract, countSteps }) {
                     labelCol={{ span: 8 }}
                     wrapperCol={{ span: 16 }}
                     style={{ maxWidth: 600 }}>
-                    <Form.Item
+                    {/* <Form.Item
                         name='number'
                         label="Номер этапа"
                         required
                         initialValue={countSteps + 1}
                     >
                         <InputNumber />
-                    </Form.Item>
+                    </Form.Item> */}
                     <Form.Item
                         name='name'
                         label="Название этапа"

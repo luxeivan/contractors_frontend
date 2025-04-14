@@ -13,7 +13,7 @@ export default function ViewSteps({steps}) {
             children: <Flex vertical gap={20}>
                 <p>{item.description}</p>
                 <Flex gap={20}>
-                    {item.photos.map(item => <Image key={item.id} src={`${server}${item.url}`} width={200} />)}
+                    {item.photos?.map(item => <Image key={item.id} src={`${server}${item.url}`} width={200} />)}
                 </Flex>
             </Flex>,
         }

@@ -1,27 +1,12 @@
-import { cookies } from "next/headers"
-import { NextResponse } from "next/server"
+export { auth as middleware} from "@/auth"
 
-export default async function middleware(req) {
-    // const currentPage = req.nextUrl.pathname
-    // const protectedRoutes = ['/admin']
-    // const isProtectedRoute = protectedRoutes.includes(currentPage)
-    // console.log("currentPage:", currentPage)
-    // console.log("isProtectedRoute:",isProtectedRoute)
-    
-    // if (isProtectedRoute) {
-        const cookie = (await cookies()).get('jwt')?.value
-        // console.log("Сработал middleware")
-        if (!cookie) {
-            // console.log("Сработал middleware и переадресация")
-            return NextResponse.redirect(new URL('/login', req.nextUrl))
-        }
-        return NextResponse.next()
-        // }
-    }
+// export default auth((req) => {
+//     if (!req.auth && req.nextUrl.pathname !== "/login") {
+//       const newUrl = new URL("/login", req.nextUrl.origin)
+//       return Response.redirect(newUrl)
+//     }
+//   })
 
-    export const config = {
-        matcher: [
-            '/dashboard/:path*',
-            '/admin/:path*'
-        ],
-    }
+export const config = {
+    matcher: ['/admin/:path*', '/dashboard/:path*','/checkauth/:path*'],
+  }
