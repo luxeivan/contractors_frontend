@@ -9,15 +9,15 @@ export async function GET(request) {
     // console.log("url",url);
     if(!session){
         // return NextResponse.redirect(url)
-        return NextResponse.redirect(new URL('/login', request.url))
-        // redirect('/login')
+        // return NextResponse.redirect(new URL('/login', request.url))
+        redirect('/login')
     }else{
         if(session.user?.role==='admin'||session.user?.role==='readadmin'){
-            // redirect('/admin')
-            return NextResponse.redirect(new URL('/admin', request.url))
+            // return NextResponse.redirect(new URL('/admin', request.url))
+            redirect('/admin')
         }else{
-            // redirect('/dashboard')
-            return NextResponse.redirect(new URL('/dashboard', request.url))
+            // return NextResponse.redirect(new URL('/dashboard', request.url))
+            redirect('/dashboard')
         }
     }
     
