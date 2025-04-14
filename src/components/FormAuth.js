@@ -3,10 +3,8 @@ import React, { useState } from 'react'
 import { Form, Input, Button, Alert } from 'antd'
 // import { getUser } from '@/lib/auth';
 // import { redirect } from 'next/navigation'
-import { useSearchParams } from "next/navigation";
 import { signIn } from 'next-auth/react';
 export default function FormAuth() {
-    console.log(useSearchParams())
     const [errorAuth, setErrorAuth] = useState(false)
     const [auth, setAuth] = useState(false)
     const [loading, setLoading] = useState(false)

@@ -8,7 +8,7 @@ import { signOut } from "next-auth/react"
 export default function ButtonLogout() {
     const handlerClick = async () => {
         // console.log(123);
-        await signOut({redirectTo:'/'})
+        await signOut({ redirectTo: '/' })
     }
     return (
         <Button onClick={handlerClick}>Выйти</Button>
