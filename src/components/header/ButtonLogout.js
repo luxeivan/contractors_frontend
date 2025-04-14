@@ -9,8 +9,8 @@ import { redirect } from 'next/navigation'
 export default function ButtonLogout() {
     const handlerClick = async () => {
         // console.log(123);
-        await signOut({redirect:false})
-        redirect('/')
+        await signOut({ redirectTo: '/' })
+        // redirect('/')
     }
     return (
         <Button onClick={handlerClick}>Выйти</Button>

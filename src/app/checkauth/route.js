@@ -4,20 +4,20 @@ import { redirect } from 'next/navigation'
 
 export async function GET(request) {
     const session = await auth()
-    // console.log("request",request);
-    const url = new URL('/login', request.url)
+    console.log("request.nextUrl",request.nextUrl);
+    // const url = new URL('/login', request.url)
     // console.log("url",url);
     if(!session){
         // return NextResponse.redirect(url)
-        // return NextResponse.redirect(new URL('/login', request.url))
-        redirect('/login')
+        return NextResponse.redirect(new URL('/login', request.nextUrl.url))
+        // redirect('/login')
     }else{
         if(session.user?.role==='admin'||session.user?.role==='readadmin'){
-            // return NextResponse.redirect(new URL('/admin', request.url))
-            redirect('/admin')
+            return NextResponse.redirect(new URL('/admin', request.nextUrl.url))
+            // redirect('/admin')
         }else{
-            // return NextResponse.redirect(new URL('/dashboard', request.url))
-            redirect('/dashboard')
+            return NextResponse.redirect(new URL('/dashboard', request.nextUrl.url))
+            // redirect('/dashboard')
         }
     }
     

@@ -4,6 +4,7 @@ import { Form, Input, Button, Alert } from 'antd'
 // import { getUser } from '@/lib/auth';
 // import { redirect } from 'next/navigation'
 import { signIn } from 'next-auth/react';
+import { redirect } from 'next/navigation';
 export default function FormAuth() {
     const [errorAuth, setErrorAuth] = useState(false)
     const [auth, setAuth] = useState(false)

@@ -2,7 +2,11 @@ import NextAuth from "next-auth"
 import Credentials from "next-auth/providers/credentials"
 import { getUser } from "./lib/auth"
 import axios from "axios"
+import { redirect } from "next/navigation"
+import { NextResponse } from "next/server"
 // import { redirect } from "next/navigation"
+
+const thisServer = process.env.THIS_SERVER
 const server = process.env.SERVER_API
 const login = async (username, password) => {
     try {
@@ -52,7 +56,6 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
                     return user
                 } catch (error) {
                     console.log("Ошибка авторизации123", error);
-
                 }
             },
 
@@ -65,7 +68,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
     callbacks: {
         // redirect(propredirect) {
         //     console.log("propredirect",propredirect);
-
+        //     // redirect('/checkauth')
         // },
         // signIn(signInprop){
 
@@ -87,9 +90,11 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         },
         // authorized: async ({ auth }) => {
         //     console.log("auth", auth);
-        //     // redirect('/')
+        //     if(auth){
+        //         return NextResponse.redirect(new URL('/checkauth',thisServer))
+        //     }
         //     // Logged in users are authenticated, otherwise redirect to login page
-        //     return !!auth
+        //     // return !!auth
         // },
     },
 
